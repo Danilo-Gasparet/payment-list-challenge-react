@@ -1,3 +1,4 @@
+import { Routes, Route } from "react-router";
 import { I18N } from "./constants/i18n";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PaymentsPage } from "./components/PaymentsPage";
@@ -25,7 +26,9 @@ function App() {
           </div>
         </header>
         <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          <PaymentsPage />
+          <Routes>
+            <Route path="/" element={<PaymentsPage />} />
+          </Routes>
         </main>
       </div>
     </QueryClientProvider>
