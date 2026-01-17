@@ -1,5 +1,3 @@
-export interface Payment {
-}
+export interface Payment {}
 
-export interface PaymentSearchResponse {
-}
+export interface PaymentSearchResponse {}
