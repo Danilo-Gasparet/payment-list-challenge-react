@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router";
 import { I18N } from "./constants/i18n";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { PaymentsPage } from "./components/PaymentsPage";
+import { Payments } from "./routes/payments";
 
 // This is required for tests to pass if ReactQuery is used
 // you don't have to use this library in your solution.
@@ -27,7 +27,7 @@ function App() {
         </header>
         <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <Routes>
-            <Route path="/" element={<PaymentsPage />} />
+            <Route path="/" element={<Payments />} />
           </Routes>
         </main>
       </div>
