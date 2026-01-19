@@ -1,4 +1,4 @@
-import { Payment } from "../types/payment";
+import { Payment } from "../api/types/payments";
 
 export const mockPayments134 = [
   {

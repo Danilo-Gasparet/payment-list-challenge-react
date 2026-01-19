@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
-import { I18N } from "../../constants/i18n";
+import { I18N } from "../../i18n/i18n";
 import { getLocale } from "../../utils/locale";
-import { Payment } from "../../types/payment";
+import { Payment } from "../../api/types/payments";
 import { formatAmount, formatDate } from "../../utils/formatters";
 import { StatusBadge } from "../shared-ui/StatusBadge";
 import {
@@ -19,7 +19,7 @@ type ColumnConfig = {
   key: keyof Payment;
   header: string;
   render: (payment: Payment, locale?: string) => ReactNode;
-}
+};
 
 const columnConfig = [
   {

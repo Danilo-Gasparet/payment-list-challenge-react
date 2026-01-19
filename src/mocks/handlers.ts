@@ -7,7 +7,7 @@ import {
   mockPayments456,
   mockPayments789,
 } from "./mockPaymentsData";
-import { API_URL } from "../constants";
+import { API_URL } from "../api/constants/payments";
 
 // Create a map of all payments for easy lookup
 const allPayments: any[] = [

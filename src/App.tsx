@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router";
-import { I18N } from "./constants/i18n";
+import { I18N } from "./i18n/i18n";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Payments } from "./routes/payments";
 

@@ -1,8 +1,4 @@
-// Currency types
-export type Currency = "USD" | "EUR" | "GBP" | "AUD" | "CAD" | "ZAR" | "JPY" | "CZK";
-
-// Payment status types
-export type PaymentStatus = "completed" | "pending" | "failed" | "refunded";
+import { Currency, PaymentStatus } from "../constants/payments";
 
 // Payment entity
 export interface Payment {
