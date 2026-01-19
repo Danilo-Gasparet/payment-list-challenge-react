@@ -10,7 +10,7 @@ export const TableWrapper = styled.div`
 
 export const Table = styled.table`
   min-width: 100%;
-  text-sm: 14px;
+  font-size: 14px;
   text-align: left;
 `;
 
