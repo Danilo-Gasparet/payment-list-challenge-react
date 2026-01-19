@@ -10,8 +10,8 @@ export interface Payment {
   customerName: string;
   amount: number;
   customerAddress: string;
-  currency: string;
-  status: string;
+  currency: Currency;
+  status: PaymentStatus;
   date: string;
   description: string;
 }
@@ -19,7 +19,7 @@ export interface Payment {
 // API request parameters
 export interface PaymentSearchParams {
   search?: string;
-  currency?: string;
+  currency?: Currency;
   page?: number;
   pageSize?: number;
 }

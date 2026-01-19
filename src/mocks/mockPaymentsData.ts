@@ -1,6 +1,6 @@
 import { Payment } from "../types/payment";
 
-export const mockPayments134: Payment[] = [
+export const mockPayments134 = [
   {
     id: "pay_134_1",
     customerName: "Alice Green",
@@ -51,9 +51,9 @@ export const mockPayments134: Payment[] = [
     date: "2024-04-18T11:00:00Z",
     description: "Refunded service",
   },
-];
+] satisfies Payment[];
 
-export const mockPayments205: Payment[] = [
+export const mockPayments205 = [
   {
     id: "pay_205_1",
     customerName: "Charlie Blue",
@@ -255,9 +255,9 @@ export const mockPayments205: Payment[] = [
     date: "2024-04-16T07:00:00Z",
     description: "Event booking",
   },
-];
+] satisfies Payment[];
 
-export const mockPayments456: Payment[] = [
+export const mockPayments456 = [
   {
     id: "pay_456_1",
     customerName: "Charlie Blue",
@@ -408,9 +408,9 @@ export const mockPayments456: Payment[] = [
     date: "2024-04-19T02:00:00Z",
     description: "Pending payment",
   },
-];
+] satisfies Payment[];
 
-export const mockPayments789: Payment[] = [
+export const mockPayments789 = [
   {
     id: "pay_789_1",
     customerName: "Anna Grey",
@@ -421,11 +421,11 @@ export const mockPayments789: Payment[] = [
     date: "2024-04-19T03:00:00Z",
     description: "Single item purchase",
   },
-];
+] satisfies Payment[];
 
-export const mockPayments000: Payment[] = [];
+export const mockPayments000 = [] satisfies Payment[];
 
-export const mockPayments123: Payment[] = [
+export const mockPayments123 = [
   {
     id: "pay_1",
     customerName: "John Doe",
@@ -786,4 +786,4 @@ export const mockPayments123: Payment[] = [
     date: "2024-04-15T21:00:00Z",
     description: "Payment for service",
   },
-];
+] satisfies Payment[];
