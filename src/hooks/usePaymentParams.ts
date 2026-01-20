@@ -1,7 +1,6 @@
 import { useSearchParams } from "react-router";
 import { useTransition } from "react";
-import { PaymentsParamsSchema } from "../schemas/payments";
-import { PaymentsParams } from "../api/types/payments";
+import { PaymentsParamsSchema, PaymentsParams } from "../schemas/params";
 import { logger } from "../utils/logger";
 
 export const usePaymentParams = () => {

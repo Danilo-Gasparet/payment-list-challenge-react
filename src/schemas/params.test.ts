@@ -1,5 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { SearchSchema, PaginationSchema } from "./params";
+import {
+  SearchSchema,
+  PaginationSchema,
+  PaymentsFilterSchema,
+  PaymentsParamsSchema,
+} from "./params";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "../api/constants/payments";
 
 describe("schemas/params", () => {
@@ -77,6 +82,73 @@ describe("schemas/params", () => {
       const result = PaginationSchema.parse({});
       expect(result.page).toBe(DEFAULT_PAGE);
       expect(result.pageSize).toBe(DEFAULT_PAGE_SIZE);
+    });
+  });
+
+  describe("PaymentsFilterSchema", () => {
+    it("parses valid currency filter", () => {
+      const result = PaymentsFilterSchema.parse({ currency: "USD" });
+      expect(result.currency).toBe("USD");
+    });
+
+    it("converts lowercase currency to uppercase", () => {
+      const result = PaymentsFilterSchema.parse({ currency: "usd" });
+      expect(result.currency).toBe("USD");
+    });
+
+    it("returns undefined for invalid currency", () => {
+      const result = PaymentsFilterSchema.parse({ currency: "INVALID" });
+      expect(result.currency).toBeUndefined();
+    });
+
+    it("returns undefined for empty currency", () => {
+      const result = PaymentsFilterSchema.parse({ currency: "" });
+      expect(result.currency).toBeUndefined();
+    });
+
+    it("allows missing currency field", () => {
+      const result = PaymentsFilterSchema.parse({});
+      expect(result.currency).toBeUndefined();
+    });
+  });
+
+  describe("PaymentsParamsSchema", () => {
+    it("parses complete valid params", () => {
+      const result = PaymentsParamsSchema.parse({
+        search: "pay_123",
+        currency: "EUR",
+        page: "2",
+        pageSize: "10",
+      });
+
+      expect(result.search).toBe("pay_123");
+      expect(result.currency).toBe("EUR");
+      expect(result.page).toBe(2);
+      expect(result.pageSize).toBe(10);
+    });
+
+    it("uses defaults for missing optional fields", () => {
+      const result = PaymentsParamsSchema.parse({});
+
+      expect(result.search).toBeUndefined();
+      expect(result.currency).toBeUndefined();
+      expect(result.page).toBe(1);
+      expect(result.pageSize).toBe(5);
+    });
+
+    it("handles URL search params format (string values)", () => {
+      // Simulating Object.fromEntries(searchParams.entries())
+      const result = PaymentsParamsSchema.parse({
+        search: "test",
+        currency: "gbp",
+        page: "3",
+        pageSize: "20",
+      });
+
+      expect(result.search).toBe("test");
+      expect(result.currency).toBe("GBP");
+      expect(result.page).toBe(3);
+      expect(result.pageSize).toBe(20);
     });
   });
 });

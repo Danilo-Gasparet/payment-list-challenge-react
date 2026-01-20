@@ -27,7 +27,7 @@ export const waitForErrorMessage = async (
       },
       { timeout }
     );
-  } catch (error) {
+  } catch (_error) {
     // If the expected message isn't found, let's see what error messages are actually on the page
     const errorElements = screen.queryAllByText(/error|not found|server/i);
     const errorTexts = errorElements

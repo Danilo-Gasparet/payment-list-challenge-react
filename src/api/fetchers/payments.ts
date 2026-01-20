@@ -1,6 +1,6 @@
-import { PaymentResponseSchema, PaymentsParams } from "../../schemas/payments";
+import { PaymentsParams } from "../../schemas/params";
+import { PaymentResponseSchema, PaymentsResponse } from "../schemas/payments";
 import { API_URL } from "../constants/payments";
-import { PaymentsResponse } from "../types/payments";
 import { logger } from "../../utils/logger";
 
 export const createFetchError = (message: string, status: number) =>

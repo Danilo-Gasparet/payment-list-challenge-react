@@ -1,10 +1,15 @@
 import { z } from "zod";
-import { CURRENCIES, PAYMENT_STATUSES } from "../api/constants/payments";
-import { PaginationSchema, SearchSchema } from "./params";
+import { CURRENCIES, PAYMENT_STATUSES } from "../constants/payments";
+
+// API Contract Schemas - tightly coupled to the API specification
 
 export const CurrencySchema = z.enum(CURRENCIES);
 
+export type Currency = z.infer<typeof CurrencySchema>;
+
 export const PaymentStatusSchema = z.enum(PAYMENT_STATUSES);
+
+export type PaymentStatus = z.infer<typeof PaymentStatusSchema>;
 
 export const PaymentSchema = z.object({
   id: z.string(),
@@ -17,6 +22,8 @@ export const PaymentSchema = z.object({
   description: z.string(),
 });
 
+export type Payment = z.infer<typeof PaymentSchema>;
+
 export const PaymentResponseSchema = z.object({
   payments: z.array(PaymentSchema),
   total: z.number(),
@@ -24,17 +31,4 @@ export const PaymentResponseSchema = z.object({
   pageSize: z.number(),
 });
 
-export const PaymentsFilterSchema = z.object({
-  currency: z
-    .preprocess((val) => String(val).toUpperCase(), CurrencySchema)
-    .optional()
-    .catch(undefined),
-});
-
-export const PaymentsParamsSchema = z.object({
-  ...PaginationSchema.shape,
-  ...SearchSchema.shape,
-  ...PaymentsFilterSchema.shape,
-});
-
-export type PaymentsParams = z.infer<typeof PaymentsParamsSchema>;
+export type PaymentsResponse = z.infer<typeof PaymentResponseSchema>;

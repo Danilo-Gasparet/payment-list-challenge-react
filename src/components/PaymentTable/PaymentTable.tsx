@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { I18N } from "../../i18n/i18n";
 import { getLocale } from "../../utils/locale";
-import { Payment } from "../../api/types/payments";
+import { Payment } from "../../api/schemas/payments";
 import { formatAmount, formatDate } from "../../utils/formatters";
 import { StatusBadge } from "../shared-ui/StatusBadge";
 import {

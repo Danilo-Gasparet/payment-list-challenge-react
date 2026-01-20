@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { I18N } from "../../i18n/i18n";
 import { CURRENCIES } from "../../api/constants/payments";
-import { CurrencySchema } from "../../schemas/payments";
+import { CurrencySchema } from "../../api/schemas/payments";
 import { logger } from "../../utils/logger";
 import {
   FilterRow,
