@@ -15,7 +15,7 @@ export const usePaymentParams = () => {
     const nextParams = new URLSearchParams(searchParams);
     const updatedParams = { ...params, ...updates };
 
-    const isChangingCriteria = "search" in updates;
+    const isChangingCriteria = "search" in updates || "currency" in updates;
     if (isChangingCriteria) {
       updatedParams.page = 1;
     }

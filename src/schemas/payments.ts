@@ -24,8 +24,16 @@ export const PaymentResponseSchema = z.object({
   pageSize: z.number(),
 });
 
+export const PaymentsFilterSchema = z.object({
+  currency: z
+    .preprocess((val) => String(val).toUpperCase(), CurrencySchema)
+    .optional()
+    .catch(undefined),
+});
+
 export const PaymentsParamsSchema = z.object({
   ...SearchSchema.shape,
+  ...PaymentsFilterSchema.shape,
 });
 
 export type PaymentsParams = z.infer<typeof PaymentsParamsSchema>;

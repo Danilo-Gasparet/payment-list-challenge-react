@@ -1,7 +1,15 @@
 import { useState } from "react";
 import { I18N } from "../../i18n/i18n";
+import { CURRENCIES } from "../../api/constants/payments";
+import { CurrencySchema } from "../../schemas/payments";
 
-import { FilterRow, SearchInput, SearchButton, ClearButton } from "./styles";
+import {
+  FilterRow,
+  SearchInput,
+  Select,
+  SearchButton,
+  ClearButton,
+} from "./styles";
 import { usePaymentParams } from "../../hooks/usePaymentParams";
 
 interface PaymentFiltersProps {
@@ -16,6 +24,12 @@ export function PaymentFilters({ paymentParams }: PaymentFiltersProps) {
     event.preventDefault();
 
     updateParams({ search: draftSearch || undefined });
+  };
+
+  const handleCurrencyChange = (value: string) => {
+    const parsed = CurrencySchema.safeParse(value);
+
+    updateParams({ currency: parsed.success ? parsed.data : undefined });
   };
 
   const handleClearFilters = () => {
@@ -34,6 +48,20 @@ export function PaymentFilters({ paymentParams }: PaymentFiltersProps) {
           onChange={(event) => setDraftSearch(event.target.value)}
           aria-label={I18N.SEARCH_LABEL}
         />
+
+        <Select
+          value={params.currency ?? ""}
+          onChange={(event) => handleCurrencyChange(event.target.value)}
+          aria-label={I18N.CURRENCY_FILTER_LABEL}
+        >
+          <option value="">{I18N.CURRENCIES_OPTION}</option>
+
+          {CURRENCIES.map((currency) => (
+            <option key={currency} value={currency}>
+              {currency}
+            </option>
+          ))}
+        </Select>
 
         <SearchButton type="submit">{I18N.SEARCH_BUTTON}</SearchButton>
 
