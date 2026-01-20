@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { I18N } from "../../i18n/i18n";
 
-import { FilterRow, SearchInput, SearchButton } from "./styles";
+import { FilterRow, SearchInput, SearchButton, ClearButton } from "./styles";
 import { usePaymentParams } from "../../hooks/usePaymentParams";
 
 interface PaymentFiltersProps {
   paymentParams: ReturnType<typeof usePaymentParams>;
 }
 export function PaymentFilters({ paymentParams }: PaymentFiltersProps) {
-  const { params, updateParams } = paymentParams;
+  const { params, updateParams, hasActiveCriteria } = paymentParams;
 
   const [draftSearch, setDraftSearch] = useState(params.search ?? "");
 
@@ -16,6 +16,12 @@ export function PaymentFilters({ paymentParams }: PaymentFiltersProps) {
     event.preventDefault();
 
     updateParams({ search: draftSearch || undefined });
+  };
+
+  const handleClearFilters = () => {
+    setDraftSearch("");
+
+    updateParams({ search: undefined, currency: undefined });
   };
 
   return (
@@ -30,6 +36,12 @@ export function PaymentFilters({ paymentParams }: PaymentFiltersProps) {
         />
 
         <SearchButton type="submit">{I18N.SEARCH_BUTTON}</SearchButton>
+
+        {hasActiveCriteria && (
+          <ClearButton type="button" onClick={handleClearFilters}>
+            {I18N.CLEAR_FILTERS}
+          </ClearButton>
+        )}
       </FilterRow>
     </form>
   );
