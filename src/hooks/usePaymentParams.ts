@@ -2,6 +2,7 @@ import { useSearchParams } from "react-router";
 import { useTransition } from "react";
 import { PaymentsParamsSchema } from "../schemas/payments";
 import { PaymentsParams } from "../api/types/payments";
+import { logger } from "../utils/logger";
 
 export const usePaymentParams = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -12,6 +13,8 @@ export const usePaymentParams = () => {
   );
 
   const updateParams = (updates: Partial<PaymentsParams>) => {
+    logger.info("Params update", { updates });
+
     const nextParams = new URLSearchParams(searchParams);
     const updatedParams = { ...params, ...updates };
 

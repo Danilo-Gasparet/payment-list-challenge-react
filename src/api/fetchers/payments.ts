@@ -1,6 +1,7 @@
 import { PaymentResponseSchema, PaymentsParams } from "../../schemas/payments";
 import { API_URL } from "../constants/payments";
 import { PaymentsResponse } from "../types/payments";
+import { logger } from "../../utils/logger";
 
 export const createFetchError = (message: string, status: number) =>
   Object.assign(new Error(message), { status });
@@ -22,13 +23,19 @@ export const fetchPayments = async (
   url.searchParams.set("page", String(params.page));
   url.searchParams.set("pageSize", String(params.pageSize));
 
+  logger.info("API request", { page: params.page, currency: params.currency });
+
   const response = await fetch(url.toString(), { signal });
 
   if (!response.ok) {
+    logger.error("API error", { status: response.status });
     throw createFetchError(response.statusText, response.status);
   }
 
   const data = await response.json();
+  const parsed = PaymentResponseSchema.parse(data);
 
-  return PaymentResponseSchema.parse(data);
+  logger.info("API response", { count: parsed.payments.length, total: parsed.total });
+
+  return parsed;
 };

@@ -1,5 +1,6 @@
 import { I18N } from "../../i18n/i18n";
 import { usePaymentParams } from "../../hooks/usePaymentParams";
+import { logger } from "../../utils/logger";
 import { PaginationRow, PaginationButton } from "./styles";
 
 interface PaymentPaginationProps {
@@ -16,12 +17,14 @@ export const PaymentPagination = ({
 
   const handlePrevious = () => {
     if (currentPage > 1) {
+      logger.info("Page changed", { from: currentPage, to: currentPage - 1 });
       updateParams({ page: currentPage - 1 });
     }
   };
 
   const handleNext = () => {
     if (currentPage < totalPages) {
+      logger.info("Page changed", { from: currentPage, to: currentPage + 1 });
       updateParams({ page: currentPage + 1 });
     }
   };

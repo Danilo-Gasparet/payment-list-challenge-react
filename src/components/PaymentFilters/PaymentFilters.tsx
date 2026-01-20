@@ -2,7 +2,7 @@ import { useState } from "react";
 import { I18N } from "../../i18n/i18n";
 import { CURRENCIES } from "../../api/constants/payments";
 import { CurrencySchema } from "../../schemas/payments";
-
+import { logger } from "../../utils/logger";
 import {
   FilterRow,
   SearchInput,
@@ -22,17 +22,20 @@ export function PaymentFilters({ paymentParams }: PaymentFiltersProps) {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    logger.info("Search submitted", { hasSearchTerm: Boolean(draftSearch) });
 
     updateParams({ search: draftSearch || undefined });
   };
 
   const handleCurrencyChange = (value: string) => {
     const parsed = CurrencySchema.safeParse(value);
+    logger.info("Currency filter changed", { currency: parsed.success ? parsed.data : "all" });
 
     updateParams({ currency: parsed.success ? parsed.data : undefined });
   };
 
   const handleClearFilters = () => {
+    logger.info("Filters cleared");
     setDraftSearch("");
 
     updateParams({ search: undefined, currency: undefined });
