@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { CURRENCIES, PAYMENT_STATUSES } from "../api/constants/payments";
-import { SearchSchema } from "./params";
+import { PaginationSchema, SearchSchema } from "./params";
 
 export const CurrencySchema = z.enum(CURRENCIES);
 
@@ -32,6 +32,7 @@ export const PaymentsFilterSchema = z.object({
 });
 
 export const PaymentsParamsSchema = z.object({
+  ...PaginationSchema.shape,
   ...SearchSchema.shape,
   ...PaymentsFilterSchema.shape,
 });

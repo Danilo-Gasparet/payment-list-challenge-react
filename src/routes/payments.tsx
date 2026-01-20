@@ -10,6 +10,7 @@ import { LoadingBox } from "../components/shared-ui/LoadingBox";
 import { PendingBox } from "../components/shared-ui/PendingBox";
 import { PaymentFilters } from "../components/PaymentFilters/PaymentFilters";
 import { PaymentTable } from "../components/PaymentTable/PaymentTable";
+import { PaymentPagination } from "../components/PaymentPagination/PaymentPagination";
 import { usePaymentParams } from "../hooks/usePaymentParams";
 import { usePayments } from "../hooks/usePayments";
 import { isFetchError } from "../api/fetchers/payments";
@@ -27,9 +28,18 @@ export const PaymentsList = ({ paymentParams }: PaymentsListProps) => {
     return <EmptyBox role="status">{I18N.NO_PAYMENTS_FOUND}</EmptyBox>;
   }
 
+  const totalPages = Math.ceil(data.total / data.pageSize);
+
   return (
     <PendingBox isPending={isPending}>
       <PaymentTable payments={data.payments} />
+
+      {totalPages > 1 && (
+        <PaymentPagination
+          paymentParams={paymentParams}
+          totalPages={totalPages}
+        />
+      )}
     </PendingBox>
   );
 };

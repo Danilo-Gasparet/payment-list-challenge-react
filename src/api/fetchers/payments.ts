@@ -19,8 +19,8 @@ export const fetchPayments = async (
   if (params.search) url.searchParams.set("search", params.search);
   if (params.currency) url.searchParams.set("currency", params.currency);
 
-  url.searchParams.set("page", "1");
-  url.searchParams.set("pageSize", "5");
+  url.searchParams.set("page", String(params.page));
+  url.searchParams.set("pageSize", String(params.pageSize));
 
   const response = await fetch(url.toString(), { signal });
 

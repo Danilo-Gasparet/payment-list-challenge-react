@@ -33,6 +33,7 @@ export const I18N = {
   PREVIOUS_BUTTON: "◀ Previous",
   NEXT_BUTTON: "Next ▶",
   PAGE_LABEL: "Page",
+  PAGE_LABEL_OF: "of",
 
   // Messages
   NO_PAYMENTS_FOUND: "No payments found.",
