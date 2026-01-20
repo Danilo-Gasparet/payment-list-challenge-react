@@ -5,6 +5,9 @@ export const I18N = {
   // Page title
   PAGE_TITLE: "All payments",
 
+  // Form
+  SEARCH_AND_FILTERS_FORM: "Search and filter payments",
+
   // Search and filter labels
   SEARCH_PLACEHOLDER: "Enter payment ID",
   SEARCH_LABEL: "Search payments",

@@ -1,4 +1,4 @@
-import { PaymentResponseSchema } from "../../schemas/payments";
+import { PaymentResponseSchema, PaymentsParams } from "../../schemas/payments";
 import { API_URL } from "../constants/payments";
 import { PaymentsResponse } from "../types/payments";
 
@@ -11,9 +11,12 @@ export const isFetchError = (error: unknown): error is FetchError =>
   error instanceof Error && "status" in error;
 
 export const fetchPayments = async (
+  params: PaymentsParams,
   signal?: AbortSignal
 ): Promise<PaymentsResponse> => {
   const url = new URL(API_URL, window.location.origin);
+
+  if (params.search) url.searchParams.set("search", params.search);
 
   url.searchParams.set("page", "1");
   url.searchParams.set("pageSize", "5");

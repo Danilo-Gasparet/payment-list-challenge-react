@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { CURRENCIES, PAYMENT_STATUSES } from "../api/constants/payments";
+import { SearchSchema } from "./params";
 
 export const CurrencySchema = z.enum(CURRENCIES);
 
@@ -22,3 +23,9 @@ export const PaymentResponseSchema = z.object({
   page: z.number(),
   pageSize: z.number(),
 });
+
+export const PaymentsParamsSchema = z.object({
+  ...SearchSchema.shape,
+});
+
+export type PaymentsParams = z.infer<typeof PaymentsParamsSchema>;
