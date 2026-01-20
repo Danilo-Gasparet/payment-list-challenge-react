@@ -13,7 +13,7 @@ export interface Payment {
 }
 
 // API request parameters
-export interface PaymentSearchParams {
+export interface PaymentsParams {
   search?: string;
   currency?: Currency;
   page?: number;
@@ -21,7 +21,7 @@ export interface PaymentSearchParams {
 }
 
 // API response
-export interface PaymentSearchResponse {
+export interface PaymentsResponse {
   payments: Payment[];
   total: number;
   page: number;

@@ -17,7 +17,8 @@ export const I18N = {
   SEARCH_BUTTON: "Search",
   CLEAR_FILTERS: "Clear Filters",
 
-  // Table headers
+  // Table
+  TABLE_CAPTION: "Payments Table",
   TABLE_HEADER_PAYMENT_ID: "Payment ID",
   TABLE_HEADER_DATE: "Date",
   TABLE_HEADER_AMOUNT: "Amount",

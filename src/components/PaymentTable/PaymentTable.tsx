@@ -14,6 +14,7 @@ import {
   TableRow,
   TableCell,
 } from "./styles";
+import { VisuallyHidden } from "../shared-ui/VisuallyHidden";
 
 type ColumnConfig = {
   key: keyof Payment;
@@ -66,6 +67,10 @@ export const PaymentTable = ({ payments }: PaymentTableProps) => {
   return (
     <TableWrapper>
       <Table>
+        <caption>
+          <VisuallyHidden>{I18N.TABLE_CAPTION}</VisuallyHidden>
+        </caption>
+
         <TableHeaderWrapper>
           <TableHeaderRow>
             {columnConfig.map((column) => (
@@ -75,6 +80,7 @@ export const PaymentTable = ({ payments }: PaymentTableProps) => {
             ))}
           </TableHeaderRow>
         </TableHeaderWrapper>
+
         <TableBodyWrapper>
           {payments.map((payment) => (
             <TableRow key={payment.id}>
