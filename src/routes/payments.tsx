@@ -31,7 +31,7 @@ export const PaymentsList = ({ paymentParams }: PaymentsListProps) => {
   const totalPages = Math.ceil(data.total / data.pageSize);
 
   return (
-    <PendingBox isPending={isPending}>
+    <PendingBox $isPending={isPending}>
       <PaymentTable payments={data.payments} />
 
       {totalPages > 1 && (
