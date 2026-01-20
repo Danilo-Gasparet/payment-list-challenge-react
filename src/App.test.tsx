@@ -1,10 +1,19 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { afterAll, afterEach, beforeAll, describe, expect, test } from "vitest";
+import { MemoryRouter } from "react-router";
 import { server } from "./mocks/node";
 import App from "./App";
 import { I18N } from "./i18n/i18n";
 import { format } from "date-fns";
+
+const renderWithRouter = (initialEntries: string[] = ["/"]) => {
+  return render(
+    <MemoryRouter initialEntries={initialEntries}>
+      <App />
+    </MemoryRouter>
+  );
+};
 
 // Helper function to robustly check for error messages with better debugging
 export const waitForErrorMessage = async (
@@ -75,7 +84,7 @@ afterEach(() => server.resetHandlers());
 
 describe("App - Step 1: Basic Payment List", () => {
   test("should fetch and display payments in a table with page=1 and pageSize=5", async () => {
-    render(<App />);
+    renderWithRouter();
 
     // Wait for the table to load with data cells
     await waitFor(() => {
@@ -99,7 +108,7 @@ describe("App - Step 1: Basic Payment List", () => {
 
 describe("App - Step 2: Search by Payment ID", () => {
   test("should have a search input for payment ID", () => {
-    render(<App />);
+    renderWithRouter();
 
     const searchInput = getSearchInput();
     expect(searchInput).toBeInTheDocument();
@@ -107,7 +116,7 @@ describe("App - Step 2: Search by Payment ID", () => {
   });
 
   test("should search for payments by payment ID", async () => {
-    render(<App />);
+    renderWithRouter();
 
     const searchInput = getSearchInput();
     const searchButton = screen.getByRole("button", {
@@ -125,7 +134,7 @@ describe("App - Step 2: Search by Payment ID", () => {
 
 describe("App - Step 3: Clear Filters", () => {
   test("should clear all filters when clear button is clicked", async () => {
-    render(<App />);
+    renderWithRouter();
 
     const searchInput = getSearchInput();
     const searchButton = screen.getByRole("button", {
@@ -153,7 +162,7 @@ describe("App - Step 3: Clear Filters", () => {
 
 describe("App - Step 4: Handle Payment Not Found", () => {
   test("should display error message when payment ID is not found", async () => {
-    render(<App />);
+    renderWithRouter();
 
     const searchInput = getSearchInput();
     const searchButton = screen.getByRole("button", {
@@ -169,7 +178,7 @@ describe("App - Step 4: Handle Payment Not Found", () => {
 
 describe("App - Step 5: Handle Server Error", () => {
   test("should display error message when API returns 500", async () => {
-    render(<App />);
+    renderWithRouter();
 
     const searchInput = getSearchInput();
     const searchButton = screen.getByRole("button", {
@@ -185,7 +194,7 @@ describe("App - Step 5: Handle Server Error", () => {
 
 describe("App - Step 6: Currency Filter", () => {
   test("should have a currency filter dropdown", () => {
-    render(<App />);
+    renderWithRouter();
 
     const currencySelect = screen.getByRole("combobox", {
       name: I18N.CURRENCY_FILTER_LABEL,
@@ -194,7 +203,7 @@ describe("App - Step 6: Currency Filter", () => {
   });
 
   test("should filter payments by currency when selected", async () => {
-    render(<App />);
+    renderWithRouter();
 
     const currencySelect = screen.getByRole("combobox", {
       name: I18N.CURRENCY_FILTER_LABEL,
@@ -211,7 +220,7 @@ describe("App - Step 6: Currency Filter", () => {
 
 describe("App - Step 7: Combined Currency and Payment ID Filter", () => {
   test("should filter by both currency and payment ID", async () => {
-    render(<App />);
+    renderWithRouter();
 
     const searchInput = getSearchInput();
     const searchButton = screen.getByRole("button", {
@@ -238,7 +247,7 @@ describe("App - Step 7: Combined Currency and Payment ID Filter", () => {
 
 describe("App - Step 8: Pagination", () => {
   test("should display pagination controls", async () => {
-    render(<App />);
+    renderWithRouter();
 
     await waitFor(() => {
       expect(screen.getByRole("table")).toBeInTheDocument();
@@ -255,7 +264,7 @@ describe("App - Step 8: Pagination", () => {
   });
 
   test("should disable previous button on first page", async () => {
-    render(<App />);
+    renderWithRouter();
 
     await waitFor(() => {
       expect(screen.getByRole("table")).toBeInTheDocument();
