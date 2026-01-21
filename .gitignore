@@ -10,6 +10,7 @@ dist
 npm-debug.log*
 
 # Testing
+junit.xml
 coverage
 
 # Editor directories
