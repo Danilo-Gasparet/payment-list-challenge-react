@@ -10,13 +10,10 @@ import {
   SearchButton,
   ClearButton,
 } from "./styles";
-import { usePaymentParams } from "../../hooks/usePaymentParams";
+import { usePaymentParamsContext } from "../../context/PaymentParamsContext";
 
-interface PaymentFiltersProps {
-  paymentParams: ReturnType<typeof usePaymentParams>;
-}
-export function PaymentFilters({ paymentParams }: PaymentFiltersProps) {
-  const { params, updateParams, hasActiveCriteria } = paymentParams;
+export function PaymentFilters() {
+  const { params, updateParams, hasActiveCriteria } = usePaymentParamsContext();
 
   const [draftSearch, setDraftSearch] = useState(params.search ?? "");
 

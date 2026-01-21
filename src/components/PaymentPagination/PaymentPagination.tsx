@@ -1,18 +1,14 @@
 import { I18N } from "../../i18n/i18n";
-import { usePaymentParams } from "../../hooks/usePaymentParams";
+import { usePaymentParamsContext } from "../../context/PaymentParamsContext";
 import { logger } from "../../utils/logger";
 import { PaginationRow, PaginationButton } from "./styles";
 
 interface PaymentPaginationProps {
-  paymentParams: ReturnType<typeof usePaymentParams>;
   totalPages: number;
 }
 
-export const PaymentPagination = ({
-  paymentParams,
-  totalPages,
-}: PaymentPaginationProps) => {
-  const { params, updateParams } = paymentParams;
+export const PaymentPagination = ({ totalPages }: PaymentPaginationProps) => {
+  const { params, updateParams } = usePaymentParamsContext();
   const currentPage = params.page;
 
   const handlePrevious = () => {

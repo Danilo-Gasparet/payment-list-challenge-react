@@ -11,18 +11,24 @@ import { PendingBox } from "../components/shared-ui/PendingBox";
 import { PaymentFilters } from "../components/PaymentFilters/PaymentFilters";
 import { PaymentTable } from "../components/PaymentTable/PaymentTable";
 import { PaymentPagination } from "../components/PaymentPagination/PaymentPagination";
-import { usePaymentParams } from "../hooks/usePaymentParams";
+import { PaymentParamsProvider } from "../context/PaymentParamsProvider";
+import { usePaymentParamsContext } from "../context/PaymentParamsContext";
 import { usePayments } from "../hooks/usePayments";
 import { isFetchError } from "../api/fetchers/payments";
 import { VisuallyHidden } from "../components/shared-ui/VisuallyHidden";
 
-interface PaymentsListProps {
-  paymentParams: ReturnType<typeof usePaymentParams>;
-}
+const getErrorMessage = (error: unknown): string => {
+  if (isFetchError(error)) {
+    if (error.status === 404) return I18N.PAYMENT_NOT_FOUND;
+    if (error.status === 500) return I18N.INTERNAL_SERVER_ERROR;
+  }
 
-export const PaymentsList = ({ paymentParams }: PaymentsListProps) => {
-  const { data } = usePayments(paymentParams.params);
-  const { isPending } = paymentParams;
+  return I18N.SOMETHING_WENT_WRONG;
+};
+
+const PaymentsList = () => {
+  const { params, isPending } = usePaymentParamsContext();
+  const { data } = usePayments(params);
 
   if (data.payments.length === 0) {
     return <EmptyBox role="status">{I18N.NO_PAYMENTS_FOUND}</EmptyBox>;
@@ -34,33 +40,19 @@ export const PaymentsList = ({ paymentParams }: PaymentsListProps) => {
     <PendingBox $isPending={isPending}>
       <PaymentTable payments={data.payments} />
 
-      {totalPages > 1 && (
-        <PaymentPagination
-          paymentParams={paymentParams}
-          totalPages={totalPages}
-        />
-      )}
+      {totalPages > 1 && <PaymentPagination totalPages={totalPages} />}
     </PendingBox>
   );
 };
 
-const getErrorMessage = (error: unknown): string => {
-  if (isFetchError(error)) {
-    if (error.status === 404) return I18N.PAYMENT_NOT_FOUND;
-    if (error.status === 500) return I18N.INTERNAL_SERVER_ERROR;
-  }
-  return I18N.SOMETHING_WENT_WRONG;
-};
-
-export function Payments() {
-  const paymentParams = usePaymentParams();
-  const { params } = paymentParams;
+const PaymentsContent = () => {
+  const { params } = usePaymentParamsContext();
 
   return (
     <Container>
       <Title>{I18N.PAGE_TITLE}</Title>
 
-      <PaymentFilters paymentParams={paymentParams} />
+      <PaymentFilters />
 
       <ErrorBoundary
         fallbackRender={({ error }) => (
@@ -77,9 +69,17 @@ export function Payments() {
             </LoadingBox>
           }
         >
-          <PaymentsList paymentParams={paymentParams} />
+          <PaymentsList />
         </Suspense>
       </ErrorBoundary>
     </Container>
+  );
+};
+
+export function Payments() {
+  return (
+    <PaymentParamsProvider>
+      <PaymentsContent />
+    </PaymentParamsProvider>
   );
 }
